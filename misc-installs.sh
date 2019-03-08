@@ -12,5 +12,5 @@ else
 fi
 
 # Installing rustup (for managing Rust)
-curl https://sh.rustup.rs -sSf | sh
-source $HOME/.cargo/env
+# curl https://sh.rustup.rs -sSf | sh
+# source $HOME/.cargo/env

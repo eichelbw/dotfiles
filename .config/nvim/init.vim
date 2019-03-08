@@ -26,6 +26,10 @@ Plug 'neomake/neomake'
 " JavaScript Highlight & Improved Indentation
 Plug 'pangloss/vim-javascript'
 
+" duh
+Plug 'tpope/vim-rails'
+Plug 'tomtom/tcomment_vim'
+
 " Typescript Syntax Highlight
 Plug 'leafgarland/typescript-vim'
 
@@ -34,9 +38,6 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 " A client to TSSServer so that we can get autocompletion
 Plug 'Quramy/tsuquyomi'
-
-" rust support
-Plug 'rust-lang/rust.vim'
 
 " NERDTree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -144,17 +145,14 @@ let g:ale_fixers = {
 
 " make FZF respect gitignore if `ag` is installed
 if (executable('ag'))
-    let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+    let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .gitignore -g ""'
 endif
 
 " make emmet behave well with JSX in JS and TS files
 let g:user_emmet_settings = {
 \  'javascript' : {
 \      'extends' : 'jsx',
-\  },
-\  'typescript' : {
-\      'extends' : 'tsx',
-\  },
+\  }
 \}
 
 
@@ -228,7 +226,7 @@ nnoremap ,dl    :YcmCompleter GoToDeclaration<CR>
 nnoremap ,df    :YcmCompleter GoToDefinition<CR>
 nnoremap ,#     :YcmCompleter GoToReferences<CR>
 
-
+nnoremap ,cc :TComment
 
 """""""""""""""""""""""""""""""""""""""""""""""
 " => Indentation
