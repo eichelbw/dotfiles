@@ -11,6 +11,12 @@ export ZSH=/Users/${USER}/.oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="spaceship"
+SPACESHIP_PACKAGE_SHOW=false
+SPACESHIP_NODE_SHOW=false
+SPACESHIP_EXIT_CODE_SHOW=true
+SPACESHIP_EXEC_TIME_SHOW=false
+SPACESHIP_RUBY_SHOW=false
+SPACESHIP_DOCKER_SHOW=false
 
 # Disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
@@ -29,24 +35,22 @@ plugins=(
   z
   git
   osx
-  chucknorris # ¯\_(ツ)_/¯
 )
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+[ -f ./.fzf.zsh ] && source ./.fzf.zsh
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# fzf + ag configuration
+if _has fzf && _has ag; then
+  export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_DEFAULT_OPTS='
+  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
+  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
+  '
+fi
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -60,9 +64,6 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Add cargo to the PATH
-source $HOME/.cargo/env
 
 # Use nvim as the default editor
 export EDITOR=nvim

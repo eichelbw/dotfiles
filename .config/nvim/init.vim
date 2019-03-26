@@ -8,7 +8,10 @@ syntax on                   " Enable syntax highlight
 set ttyfast                 " Faster redrawing
 set lazyredraw              " Only redraw when necessary
 set cursorline              " Find the current line quickly.
+set showcmd                 " show commands
 
+" a leader is important
+let mapleader = ","
 
 
 """""""""""""""""""""""""""""""""""""""""""""""
@@ -28,10 +31,8 @@ Plug 'pangloss/vim-javascript'
 
 " duh
 Plug 'tpope/vim-rails'
-Plug 'tomtom/tcomment_vim'
-
-" Typescript Syntax Highlight
-Plug 'leafgarland/typescript-vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 
 " Async execution library needed by tsuquyomi
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
@@ -41,6 +42,7 @@ Plug 'Quramy/tsuquyomi'
 
 " NERDTree
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdcommenter'
 
 " Async FuzzyFind
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
@@ -141,6 +143,12 @@ let g:ale_sign_warning = '⚠\ '
 " fixer configurations
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['standard'],
+\}
+"
+" linter configurations
+let g:ale_linters = {
+\   'javascript': ['standard'],
 \}
 
 " make FZF respect gitignore if `ag` is installed
@@ -154,6 +162,24 @@ let g:user_emmet_settings = {
 \      'extends' : 'jsx',
 \  }
 \}
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+"
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""
@@ -219,14 +245,25 @@ set backupdir=/tmp//
 set directory=/tmp//
 
 " map fzf to ctrl+p
-nnoremap <C-P> :Files<CR>
+nnoremap <C-p> :Files<CR>
+nnoremap <C-i> :Ag<CR>
+
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%'),
+  \                 <bang>0)
 
 " YouCompleteMeMappings
 nnoremap ,dl    :YcmCompleter GoToDeclaration<CR>
 nnoremap ,df    :YcmCompleter GoToDefinition<CR>
 nnoremap ,#     :YcmCompleter GoToReferences<CR>
 
-nnoremap ,cc :TComment
+" [,cs] Clear search.
+map <leader>cx <Esc>:noh<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""
 " => Indentation
@@ -250,6 +287,7 @@ set ai
 " Smart indent
 " Automatically inserts one extra level of indentation in some cases, and works for C-like files
 set si
+
 
 
 
