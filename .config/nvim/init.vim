@@ -28,6 +28,7 @@ Plug 'neomake/neomake'
 
 " JavaScript Highlight & Improved Indentation
 Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
 
 " duh
 Plug 'tpope/vim-rails'
