@@ -30,10 +30,14 @@ Plug 'neomake/neomake'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 
+" Typescripcript Syntax Highlight
+Plug 'leafgarland/typescript-vim'
+
 " duh
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
 
 " Async execution library needed by tsuquyomi
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
@@ -161,6 +165,9 @@ endif
 let g:user_emmet_settings = {
 \  'javascript' : {
 \      'extends' : 'jsx',
+\  },
+\  'typescript' : {
+\      'extends' : 'tsx',
 \  }
 \}
 
